@@ -1,5 +1,5 @@
 <!doctype html>  
-<html lang="en">  
+<html lang="zh">  
 <head>  
     <meta name="viewport" content="width=device-width, initial-scale=1">  
     <meta charset="utf-8">  
@@ -17,23 +17,23 @@
         }    
         
         .main-container {    
-            padding: 20px; /* 注意：我移除了padding-top: 20px; 因为我们想要控制子元素的位置 */  
-            width: 100vh; /* 宽度占页面100%，但您可以通过媒体查询来限制它 */  
-            height: 100vh; /* 高度占满视口 */  
+            padding: 20px;  
+            width: 90%; /* 宽度占页面70% */  
+            height: 100%; /* 高度占满视口 */  
             background-color: #ffffff; /* 白色主内容区背景 */    
             border-radius: 10px;    
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);    
             display: flex;    
             flex-direction: column;    
             align-items: center;    
-            /* justify-content: space-between; 移除这个，因为我们想要内容从顶部开始 */  
+            overflow-y: auto; /* 如果内容过多，允许滚动 */  
         }  
         
         .dice-container {  
             display: flex;  
             flex-wrap: wrap;  
             gap: 15px;  
-            /* margin-top: 20px; 如果按钮需要一些顶部间距，可以保留这个 */  
+            margin-top: 20px;  
             width: 100%; /* 如果需要按钮在容器内水平居中，这个宽度设置可能是有用的 */  
             justify-content: center; /* 水平居中按钮 */ 
         }
@@ -66,31 +66,54 @@
         .show-result {
             display: block;
         }
-    </style>
-</head>
-<body>
-    <div class="main-container">
-        <h1>在线掷虚拟骰子</h1>
-        <div class="dice-container">
-            <div class="dice" onclick="rollDice(4)">4面骰子</div>
-            <div class="dice" onclick="rollDice(6)">6面骰子</div>
-            <div class="dice" onclick="rollDice(8)">8面骰子</div>
-            <div class="dice" onclick="rollDice(10)">10面骰子</div>
-            <div class="dice" onclick="rollDice(12)">12面骰子</div>
-            <div class="dice" onclick="rollDice(20)">20面骰子</div>
-        </div>
-        <div class="result" id="result"></div>
-    </div>
 
-    <script>
-        function rollDice(sides) {
-            const result = Math.floor(Math.random() * sides) + 1;
-            const resultElem = document.getElementById('result');
-            resultElem.textContent = `你投出了 ${result} 点！`;
-            resultElem.classList.add('show-result');
+        /* 手机适配 */
+        @media (max-width: 600px) {
+            .main-container {
+                width: 90%; /* 手机上宽度占90% */
+                height: auto; /* 高度自适应 */
+                padding: 10px; /* 减少内边距 */
+            }
+
+            .dice-container {
+                gap: 10px; /* 减少按钮间距 */
+            }
+
+            .dice {
+                padding: 10px 15px; /* 缩小按钮尺寸 */
+                font-size: 16px; /* 缩小字体大小 */
+            }
+
+            .result {
+                font-size: 1.5em; /* 缩小结果字体大小 */
+                margin-top: 15%; /* 减少顶部间距 */
+            }
         }
-    </script>
-</body>
+    </style>  
+</head>  
+<body>  
+    <div class="main-container">  
+        <h1>在线掷虚拟骰子</h1>  
+        <div class="dice-container">  
+            <div class="dice" onclick="rollDice(4)">4面骰子</div>  
+            <div class="dice" onclick="rollDice(6)">6面骰子</div>  
+            <div class="dice" onclick="rollDice(8)">8面骰子</div>  
+            <div class="dice" onclick="rollDice(10)">10面骰子</div>  
+            <div class="dice" onclick="rollDice(12)">12面骰子</div>  
+            <div class="dice" onclick="rollDice(20)">20面骰子</div>  
+        </div>  
+        <div class="result" id="result"></div>  
+    </div>  
+
+    <script>  
+        function rollDice(sides) {  
+            const result = Math.floor(Math.random() * sides) + 1;  
+            const resultElem = document.getElementById('result');  
+            resultElem.textContent = `你投出了 ${result} 点！`;  
+            resultElem.classList.add('show-result');  
+        }  
+    </script>  
+</body>  
 </html>
 
 <a href="/login.html">index?</a>
