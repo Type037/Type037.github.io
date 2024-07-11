@@ -1,1 +1,121 @@
-<h1>刘浩宇大撒比!</h1>
+<%@ page import="java.util.ArrayList" %>
+<%--
+  Created by IntelliJ IDEA.
+  Dao.User: 86133
+  Date: 20/12/2023
+  Time: 下午 3:18
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page import="User.DAO.UserDAO" %>
+<%@ page import="User.lei.*" %>
+<%@ page import="java.util.List" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>用户管理界面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            padding: 10px 0;
+            color: white;
+            text-align: center;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        .user-list {
+            max-width: 1340px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .user {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .user-info {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .buser {
+            float: right;
+            margin-top: 10px;
+        }
+        .buser button {
+            padding: 7px;
+            background-color: #4db051;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        footer {
+            background-color: #333333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="User/styles.css">
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="Concern.jsp">全部预约</a></li>
+            <li><a href="Home.jsp">今日预约</a></li>
+            <li><a href="UserManagement.jsp">未完成预约</a></li>
+        </ul>
+    </nav>
+</header>
+<h2 align="center">搜索</h2>
+<div align="center">
+    <input type="text" style="width: 1320px; padding: 10px; border: 1px solid #ccc; border-radius: 20px;" >
+</div>
+<div class="user-list">
+    <%
+
+        // 遍历用户列表并显示信息
+        User user = UserDAO.findUserById(id);
+    %>
+    <div class="user">
+        <div class="user-info">用户名: <%= user.getUname() %></div>
+        <div class="buser">
+            <form action="../DeleteUserServlet" method="post" style="display: inline;">
+                <input type="hidden" name="uid" value="<%= user.getUid() %>">
+                <button type="submit">删除</button>
+            </form>
+            <button style="margin-left: 10px;" onclick="updateUser(<%= user.getUid() %>)">修改</button>
+        </div>
+        <div class="user-info">订单号: <%= user.getNumber() %></div>
+        <div class="user-info">电话: <%= user.getPhone() %></div>
+        <div class="user-info">时间: <%= user.getUtime() %></div>
+    </div>
+
+</div>
+<footer>
+    <p>&copy; Thaï Bonheur SPA</p>
+</footer>
+</body>
+</html>
