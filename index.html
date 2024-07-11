@@ -1,46 +1,97 @@
 <!doctype html>  
 <html lang="en">  
-<head>
+<head>  
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
     <meta charset="utf-8">  
+    <title>在线掷虚拟骰子</title>  
     <style>  
-        /* 样式可以根据需要调整 */  
-        .dice {  
-            display: inline-block;  
-            margin: 10px;  
-            padding: 20px;  
-            border: 1px solid #ccc;  
-            text-align: center;  
-            font-size: 24px;  
-            cursor: pointer;  
+        body, html {    
+            margin: 0;    
+            padding: 0;    
+            height: 100%;    
+            font-family: Arial, sans-serif;    
+            display: flex;    
+            justify-content: center;    
+            align-items: center;    
+            background-color: #343a40; /* 深灰色背景 */    
+        }    
+        
+        .main-container {    
+            padding: 20px; /* 注意：我移除了padding-top: 20px; 因为我们想要控制子元素的位置 */  
+            width: 100vh; /* 宽度占页面100%，但您可以通过媒体查询来限制它 */  
+            height: 100vh; /* 高度占满视口 */  
+            background-color: #ffffff; /* 白色主内容区背景 */    
+            border-radius: 10px;    
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);    
+            display: flex;    
+            flex-direction: column;    
+            align-items: center;    
+            /* justify-content: space-between; 移除这个，因为我们想要内容从顶部开始 */  
         }  
-    </style>  
-</head>  
-<body>  
-  
-<div class="dice" onclick="rollDice(4)">4面骰子</div>  
-<div class="dice" onclick="rollDice(6)">6面骰子</div>  
-<div class="dice" onclick="rollDice(8)">8面骰子</div>  
-<div class="dice" onclick="rollDice(10)">10面骰子</div>  
-<div class="dice" onclick="rollDice(12)">12面骰子</div>  
-<div class="dice" onclick="rollDice(20)">20面骰子</div>  
-  
-<script>  
-    function rollDice(sides) {  
-        const result = Math.floor(Math.random() * sides) + 1;  
-        // 这里假设您希望显示结果在某个地方，可以创建一个id为'result'的div  
-        // 或者修改函数以适应您的具体需求  
-        alert(`投出了 ${result} 点！`);  
-        document.getElementById('result').textContent = `投出了 ${result} 点！`;  
-    }  
-</script>  
-  
-</body>  
-</html>
-<a href="/login.html">index?</a>
-<a href="/rili.html">rili?</a>
+        
+        .dice-container {  
+            display: flex;  
+            flex-wrap: wrap;  
+            gap: 15px;  
+            /* margin-top: 20px; 如果按钮需要一些顶部间距，可以保留这个 */  
+            width: 100%; /* 如果需要按钮在容器内水平居中，这个宽度设置可能是有用的 */  
+            justify-content: center; /* 水平居中按钮 */ 
+        }
 
-  
-</body>  
+        .dice {
+            padding: 15px 25px;
+            font-size: 18px;
+            color: #ecf0f1;
+            background-color: #3498db; /* 主色调 */
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dice:hover {
+            background-color: #2980b9; /* 悬停时的颜色 */
+        }
+
+        .result {
+            font-size: 2em;
+            margin-top: 25%; 
+            display: none;
+            padding: 20px;
+            color: #2c3e50; /* 文本颜色 */
+            border-top: 2px solid #bdc3c7;
+            padding-top: 20px;
+        }
+
+        .show-result {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1>在线掷虚拟骰子</h1>
+        <div class="dice-container">
+            <div class="dice" onclick="rollDice(4)">4面骰子</div>
+            <div class="dice" onclick="rollDice(6)">6面骰子</div>
+            <div class="dice" onclick="rollDice(8)">8面骰子</div>
+            <div class="dice" onclick="rollDice(10)">10面骰子</div>
+            <div class="dice" onclick="rollDice(12)">12面骰子</div>
+            <div class="dice" onclick="rollDice(20)">20面骰子</div>
+        </div>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function rollDice(sides) {
+            const result = Math.floor(Math.random() * sides) + 1;
+            const resultElem = document.getElementById('result');
+            resultElem.textContent = `你投出了 ${result} 点！`;
+            resultElem.classList.add('show-result');
+        }
+    </script>
+</body>
 </html>
+
 <a href="/login.html">index?</a>
 <a href="/rili.html">rili?</a>
