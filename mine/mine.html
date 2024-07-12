@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-image: 'fronds-1869757_1920.jpg';
+            background-color: #f0f0f0;
             margin: 0;
             padding: 0;
             display: flex;
@@ -107,7 +107,7 @@
             left: 0;
             bottom: 0;
             width: 100px; 
-            height: 250px; /* Adjust as needed */
+            height: 250px;/* Adjust as needed */
             background-color: white;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             z-index: 1000; /* Ensure it's above other content */
@@ -135,21 +135,25 @@
             background-color: #f0f0f0;
             text-decoration: none; 
         }
+
+
     </style>
 </head>
-<body>
+<body background="fronds-1869757_1920.jpg">
+    
     <div class="container">
+        
         <div class="title-box"><h1 id="title">Welcome to My Blog</h1></div>
         <div class="sidebar">
             <ul>
                 <li><a href="#about">About Me</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#skills">skills</a></li>
                 <li><a href="#blogs">Blogs</a></li>
+                <li><a href="#projects">projects</a></li>
+                <li><a href="#contact">contact</a></li>
             </ul>
         </div>
-        
+
         <img src="nature-3808354_1920.jpg" alt="Profile Picture">
         <h2 id="intro">Hello! I'm a software engineer student about coding and technology. Follow my blog for insights, tutorials, and more.</h2>
         <button onclick="toggleLanguage()">切换语言</button>
@@ -165,7 +169,7 @@
                 <li>Java</li>
                 <li>GameMaker</li>
                 <li>Unity</li>
-                <li>JavaScript</li>
+                <li>js</li>
                 <li>Python</li>
             </ul>
         </section>
@@ -201,7 +205,6 @@
                 <a href="mailto:your.email@example.com"><i class="fas fa-envelope"></i></a>
             </div>
         </section>
-        
     </div>
     <script>
         let isEnglish = false; // Start with Chinese content
@@ -214,7 +217,6 @@
             const skillsTitle = document.getElementById('skills-title');
             const projectsTitle = document.getElementById('projects-title');
             const contactTitle = document.getElementById('contact-title');
-            const blogsList = document.getElementById('blogs-list');
 
             if (isEnglish) {
                 title.innerText = '欢迎来到我的博客';
@@ -224,7 +226,6 @@
                 skillsTitle.innerText = '技能';
                 projectsTitle.innerText = '项目';
                 contactTitle.innerText = '联系我';
-                blogsList.innerHTML = '<li><a href="blog1.html">博客文章 1</a></li><li><a href="blog2.html">博客文章 2</a></li><li><a href="blog3.html">博客文章 3</a></li>';
             } else {
                 title.innerText = 'Welcome to My Blog';
                 intro.innerText = "Hello! I'm a student passionate about coding and technology. Follow my blog for insights, tutorials, and more.";
@@ -233,7 +234,6 @@
                 skillsTitle.innerText = 'Skills';
                 projectsTitle.innerText = 'Projects';
                 contactTitle.innerText = 'Contact';
-                blogsList.innerHTML = '<li><a href="blog1.html">Blog Post 1</a></li><li><a href="blog2.html">Blog Post 2</a></li><li><a href="blog3.html">Blog Post 3</a></li>';
             }
 
             isEnglish = !isEnglish;
