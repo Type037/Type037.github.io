@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在虚拟机中使用Docker安装和配置ELK</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        pre {
+            background: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            background: #eee;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>在虚拟机中使用Docker安装和配置ELK</h1>
+    <h2>一、安装前准备</h2>
+    <p>
+        在本文中，我们将在 VMware 虚拟机中的 CentOS 7 系统上安装和配置 ELK（Elasticsearch、Logstash、Kibana）套件。
+        确保所有操作在同一版本上进行，以避免兼容性问题。本文使用的 ELK 版本为 7.12.1，虚拟机的 IP 地址为 192.168.150.128。
+    </p>
+    <p>注意事项：</p>
+    <ul>
+        <li>确保了解 Docker 的基础指令，如 <code>docker cp</code>、<code>docker rm -f</code>、<code>docker network create</code>、<code>docker logs</code> 等。</li>
+        <li>创建用于存储配置文件和数据的目录：<code>/usr/local/elk</code>。在该目录下创建三个子目录：<code>elasticsearch</code>、<code>kibana</code> 和 <code>logstash</code>。</li>
+        <li>为了容器之间的通信，创建 Docker 网络：<code>docker network create elk</code>。</li>
+    </ul>
+
+    <h2>二、安装 Docker</h2>
+    <p>按照 Docker 官方文档在 CentOS 上安装 Docker的步骤进行安装。完成后，使用以下命令检查安装是否成功：</p>
+    <pre><code># 查看 Docker 版本
+docker -v
+
+# 查看 Docker 详细信息
+docker info</code></pre>
+
+    <h2>三、安装和配置 Elasticsearch</h2>
+    <h3>1. 拉取并查看 Elasticsearch 镜像</h3>
+    <pre><code># 搜索 Elasticsearch 镜像
+docker search elasticsearch
+
+# 拉取特定版本的 Elasticsearch 镜像
+docker pull elasticsearch:7.12.1
+
+# 查看已下载的镜像
+docker images</code></pre>
+
+    <h3>2. 运行并配置 Elasticsearch</h3>
+    <pre><code># 启动 Elasticsearch 容器
+docker run -d --name es --net elk -P -e "discovery.type=single-node" elasticsearch:7.12.1
+
+# 进入容器并查看配置文件路径
+docker exec -it es /bin/bash
+cd /usr/share/elasticsearch/config
+
+# 退出容器，并将配置文件拷贝到宿主机
+exit
+docker cp es:/usr/share/elasticsearch/config/elasticsearch.yml /usr/local/elk/elasticsearch/
+
+# 修改配置文件权限
+chmod 666 /usr/local/elk/elasticsearch/elasticsearch.yml
+
+# 创建数据目录并修改权限
+mkdir -p /usr/local/elk/elasticsearch/data
+chmod -R 777 /usr/local/elk/elasticsearch/data</code></pre>
+
+    <h3>3. 重新运行并挂载 Elasticsearch 容器</h3>
+    <pre><code># 删除旧的 Elasticsearch 容器
+docker rm -f es
+
+# 启动并挂载新的 Elasticsearch 容器
+docker run -d --name es --net elk \
+  -p 9200:9200 -p 9300:9300 \
+  -e "discovery.type=single-node" \
+  --privileged=true \
+  -v /usr/local/elk/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+  -v /usr/local/elk/elasticsearch/data:/usr/share/elasticsearch/data \
+  elasticsearch:7.12.1</code></pre>
+
+    <h3>4. 检查 Elasticsearch 容器状态</h3>
+    <pre><code># 查看正在运行的容器
+docker ps
+
+# 查看容器日志
+docker logs es
+
+# 使用 curl 检查 Elasticsearch 服务是否启动
+curl localhost:9200</code></pre>
+
+    <h2>四、安装和配置 Elasticsearch-head（可选）</h2>
+    <p>Elasticsearch-head 是一个可视化工具，用于查看和管理 Elasticsearch 数据。此步骤为可选步骤。</p>
+    <h3>1. 拉取 Elasticsearch-head 镜像</h3>
+    <pre><code>docker pull mobz/elasticsearch-head:5</code></pre>
+
+    <h3>2. 运行并配置 Elasticsearch-head 容器</h3>
+    <pre><code>docker run -d --name es_head --net elk -p 9100:9100 mobz/elasticsearch-head:5</code></pre>
+
+    <h3>3. 修改配置文件（可选）</h3>
+    <pre><code># 将配置文件拷贝到宿主机
+docker cp es_head:/usr/src/app/Gruntfile.js /usr/local/elk/elasticsearch-head/
+
+# 编辑配置文件，在 connect -> server -> options 下添加：
+hostname: '0.0.0.0'
+
+# 将修改后的文件拷贝回容器
+docker cp /usr/local/elk/elasticsearch-head/Gruntfile.js es_head:/usr/src/app/
+
+# 重启容器
+docker restart es_head</code></pre>
+
+    <h3>4. 处理页面无数据问题（可选）</h3>
+    <pre><code># 拷贝配置文件
+docker cp es_head:/usr/src/app/_site/vendor.js /usr/local/elk/elasticsearch-head/
+
+# 修改文件中的特定行，确保请求头符合要求
+sed -i '6886s/.*/contentType: "application/json;charset=UTF-8"/' /usr/local/elk/elasticsearch-head/vendor.js
+sed -i '7573s/.*/contentType === "application/json;charset=UTF-8"/' /usr/local/elk/elasticsearch-head/vendor.js
+
+# 将修改后的文件拷贝回容器
+docker cp /usr/local/elk/elasticsearch-head/vendor.js es_head:/usr/src/app/_site/
+
+# 刷新页面
+docker restart es_head</code></pre>
+
+    <h2>五、安装和配置 Kibana</h2>
+    <h3>1. 拉取 Kibana 镜像</h3>
+    <pre><code>docker pull kibana:7.12.1</code></pre>
+
+    <h3>2. 运行并配置 Kibana 容器</h3>
+    <pre><code>docker run -d --name kibana --net elk -P \
+  -e "ELASTICSEARCH_HOSTS=http://es:9200" \
+  -e "I18N_LOCALE=zh-CN" \
+  kibana:7.12.1</code></pre>
+
+    <h3>3. 拷贝并修改 Kibana 配置文件</h3>
+    <pre><code># 拷贝配置文件到宿主机
+docker cp kibana:/usr/share/kibana/config/kibana.yml /usr/local/elk/kibana/
+
+# 修改配置文件
+chmod 666 /usr/local/elk/kibana/kibana.yml
+nano /usr/local/elk/kibana/kibana.yml
+
+# 修改内容如下
+server.name: kibana
+server.host: "0"
+elasticsearch.hosts: ["http://192.168.150.128:9200"]
+monitoring.ui.container.elasticsearch.enabled: true
+i18n.locale: zh-CN</code></pre>
+
+    <h3>4. 重新运行并挂载 Kibana 容器</h3>
+    <pre><code># 删除旧的 Kibana 容器
+docker rm -f kibana
+
+# 启动并挂载新的 Kibana 容器
+docker run -d --name kibana --net elk \
+  -p 5601:5601 \
+  -v /usr/local/elk/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml \
+  kibana:7.12.1</code></pre>
+
+    <h3>5. 检查 Kibana 容器状态</h3>
+    <pre><code># 查看容器日志
+docker logs kibana
+
+# 打开浏览器，访问 Kibana 控制台
+http://192.168.150.128:5601</code></pre>
+
+    <h2>六、安装和配置 Logstash</h2>
+    <h3>1. 拉取 Logstash 镜像并拷贝配置文件</h3>
+    <pre><code>docker pull logstash:7.12.1
+
+# 运行 Logstash 容器
+docker run -d -P --name logstash --net elk logstash:7.12.1
+
+# 拷贝配置文件到宿主机
+docker cp logstash:/usr/share/logstash/config /usr/local/elk/logstash/
+docker cp logstash:/usr/share/logstash/data /usr/local/elk/logstash/
+docker cp logstash:/usr/share/logstash/pipeline /usr/local/elk/logstash/
+
+# 修改文件权限
+chmod -R 777 /usr/local/elk/logstash/</code></pre>
+
+    <h3>2. 修改 Logstash 配置文件</h3>
+    <pre><code># 修改 logstash.yml 文件
+nano /usr/local/elk/logstash/config/logstash.yml
+
+# 修改内容如下
+http.host: "0.0.0.0"
+xpack.monitoring.elasticsearch.hosts: ["http://192.168.150.128:9200"]
+
+# 修改 logstash.conf 文件
+nano /usr/local/elk/logstash/pipeline/logstash.conf
+
+# 修改内容如下
+input {
+  tcp {
+    mode => "server"
+    host => "0.0.0.0"
+    port => 5044
+    codec => json_lines
+  }
+}
+
+output {
+  elasticsearch {
+    hosts  => ["http://192.168.150.128:9200"]
+    index  => "elk"
+    codec  => "json"
+  }
+  stdout {
+    codec => rubydebug
+  }
+}</code></pre>
+
+    <h3>3. 重新运行并挂载 Logstash 容器</h3>
+    <pre><code># 删除旧的 Logstash 容器
+docker rm -f logstash
+
+# 启动并挂载新的 Logstash 容器
+docker run -d --name logstash --net elk \
+  --privileged=true \
+  -p 5044:5044 -p 9600:9600 \
+  -v /usr/local/elk/logstash/data:/usr/share/logstash/data \
+  -v /usr/local/elk/logstash/config:/usr/share/logstash/config \
+  -v /usr/local/elk/logstash/pipeline:/usr/share/logstash/pipeline \
+  logstash:7.12.1</code></pre>
+
+    <h3>4. 检查 Logstash 容器状态</h3>
+    <pre><code># 查看容器日志
+docker logs logstash
+
+# 测试数据输入
+echo '{"message": "Hello ELK"}' | nc localhost 5044</code></pre>
+    <p>通过以上步骤，我们已经成功在虚拟机中使用 Docker 安装并配置了 ELK 套件。此时，你可以通过 Kibana 的界面查看和分析 Elasticsearch 中的数据。</p>
+
+    <h2>问题：</h2>
+    <h3>一、为什么要创建“elk”自建网络</h3>
+    <p>
+        在使用 Docker 安装和配置 ELK（Elasticsearch、Logstash、Kibana）套件时，创建自定义的 Docker 网络（例如 elk 网络）是一个重要步骤。
+        以下是创建自定义 Docker 网络的原因及其优点：
+    </p>
+    <ol>
+        <li><strong>容器间通信</strong></li>
+        <p>问题：在默认的 Docker 网络配置下，容器可能无法通过容器名称直接互相访问，必须使用容器的 IP 地址。</p>
+        <p>解决方案：创建自定义 Docker 网络后，所有加入该网络的容器可以通过容器名称进行互相通信，这简化了配置。例如，在 <code>docker run</code> 命令中指定网络名称 <code>--net elk</code> 后，Kibana 可以通过 <code>http://es:9200</code> 访问 Elasticsearch。</p>
+        <li><strong>网络隔离和安全性</strong></li>
+        <p>问题：默认网络配置下，所有容器都在同一个网络中，容易造成安全隐患和网络冲突。</p>
+        <p>解决方案：创建自定义 Docker 网络可以实现网络隔离，确保 ELK 容器运行在独立的网络空间中，避免与其他容器的网络冲突，提升安全性和可靠性。</p>
+        <li><strong>网络配置管理</strong></li>
+        <p>问题：在没有自定义网络的情况下，网络配置管理复杂，特别是在涉及多个容器和复杂网络拓扑时。</p>
+        <p>解决方案：通过创建自定义网络，可以更灵活地管理和配置网络参数，方便调试和维护。自定义网络支持桥接、覆盖等多种网络模式，可以根据实际需求进行选择和调整。</p>
+    </ol>
+
+    <h3>二、向Elasticsearch写入日志的实现过程</h3>
+    <p>
+        在使用 Docker 部署 ELK（Elasticsearch、Logstash、Kibana）套件并向其写入日志时，涉及到多个数据传输步骤。
+        这些步骤确保日志数据能够从日志生成的应用程序传输到 Elasticsearch 并最终在 Kibana 中进行可视化。以下是详细的步骤说明：
+    </p>
+    <ol>
+        <li><strong>准备日志生成应用程序</strong></li>
+        <p>首先，确保你的日志生成应用程序（例如 Spring Boot 应用）配置正确，能够将日志数据发送到 Logstash。</p>
+        <h4>配置 Logback（以 Spring Boot 为例）</h4>
+        <p>在 <code>pom.xml</code> 中添加 Logstash 的依赖：</p>
+        <pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;net.logstash.logback&lt;/groupId&gt;
+    &lt;artifactId&gt;logstash-logback-encoder&lt;/artifactId&gt;
+    &lt;version&gt;6.6&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+        <p>在 <code>src/main/resources</code> 下创建 <code>log/logback-spring.xml</code> 文件，配置 Logstash appender：</p>
+        <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;configuration&gt;
+    &lt;include resource="org/springframework/boot/logging/logback/base.xml" /&gt;
+    &lt;appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender"&gt;
+        &lt;destination&gt;192.168.150.128:5044&lt;/destination&gt;
+        &lt;encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"&gt;
+            &lt;providers&gt;
+                &lt;timestamp&gt;
+                    &lt;timeZone&gt;UTC&lt;/timeZone&gt;
+                &lt;/timestamp&gt;
+                &lt;pattern&gt;
+                    &lt;pattern&gt;
+                        {
+                        "index":"elk",
+                        "appname":"${spring.application.name}",
+                        "timestamp": "%d{yyyy-MM-dd HH:mm:ss.SSS}",
+                        "thread": "%thread",
+                        "level": "%level",
+                        "logger_name": "%logger",
+                        "message": "%msg",
+                        "stack_trace": "%exception"
+                        }
+                    &lt;/pattern&gt;
+                &lt;/pattern&gt;
+            &lt;/providers&gt;
+        &lt;/encoder&gt;
+    &lt;/appender&gt;
+    &lt;root level="INFO"&gt;
+        &lt;appender-ref ref="LOGSTASH" /&gt;
+        &lt;appender-ref ref="CONSOLE" /&gt;
+    &lt;/root&gt;
+&lt;/configuration&gt;</code></pre>
+        <p>在 <code>application.yml</code> 中指定 Logback 配置文件：</p>
+        <pre><code>logging:
+  config: classpath:log/logback-spring.xml</code></pre>
+
+        <li><strong>启动 Logstash 容器</strong></li>
+        <p>确保 Logstash 容器已经启动并能够接收日志数据。配置 Logstash 管道文件以处理从应用程序接收到的日志数据。</p>
+        <h4>创建 Logstash 配置文件</h4>
+        <p>在 <code>logstash/pipeline/logstash.conf</code> 中配置输入和输出：</p>
+        <pre><code>input {
+  tcp {
+    mode => "server"
+    host => "0.0.0.0"
+    port => 5044
+    codec => json_lines
+  }
+}
+
+output {
+  elasticsearch {
+    hosts  => ["http://192.168.150.128:9200"]
+    index  => "elk"
+    codec  => "json"
+  }
+  stdout {
+    codec => rubydebug
+  }
+}</code></pre>
+
+        <li><strong>启动 Logstash 容器并挂载配置</strong></li>
+        <p>确保 Logstash 配置文件正确挂载并启动容器：</p>
+        <pre><code>docker rm -f logstash
+
+docker run -d --name logstash --net elk \
+--privileged=true \
+-p 5044:5044 -p 9600:9600 \
+-v $PWD
+</body>
+</html>
