@@ -124,9 +124,17 @@
             color: #666;
         }
 
-        @media (min-width: 768px) {
+        @media (max-width: 768px) {
             .service-item {
-                flex-basis: calc(50% - 20px);
+                flex: 1 1 100%;
+            }
+
+            main {
+                width: 95%;
+            }
+
+            section {
+                margin: 0;
             }
         }
     </style>
