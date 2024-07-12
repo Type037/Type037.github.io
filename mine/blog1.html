@@ -24,9 +24,19 @@
             padding: 2px 4px;
             border-radius: 3px;
         }
+        .container {
+            width: 80%;
+            max-width: 800px;
+            text-align: center;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body background="fronds-1869757_1920.jpg">
+        <div class="container">
     <h1>CentOS 7系统下使用Docker安装elk（Elasticsearch、Logstash、Kibana）套件</h1>
     <h2>一、安装前准备</h2>
     <p>
@@ -348,5 +358,9 @@ docker run -d --name logstash --net elk \
 --privileged=true \
 -p 5044:5044 -p 9600:9600 \
 -v $PWD
+        </code>
+        </pre>
+    </ol>
+        </div>
 </body>
 </html>
