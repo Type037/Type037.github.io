@@ -3,44 +3,52 @@
 
 <head>
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Sun | Software Engineer</title>
 
     <!-- Fonts -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- GSAP -->
+
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
 
     <style>
         :root {
 
-            /* Forest Theme */
-
             --bg: #07110D;
+
             --bg-soft: #0D1813;
 
-            --card: rgba(255, 255, 255, 0.04);
+            --card: rgba(255, 255, 255, 0.05);
 
             --text: #E8ECE9;
+
             --text-soft: #93A29B;
 
             --line: rgba(255, 255, 255, 0.08);
 
             --accent: #7FA98B;
+
             --accent-light: #B7D4BE;
         }
 
         * {
+
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
         html {
+
             scroll-behavior: smooth;
         }
 
@@ -48,25 +56,34 @@
 
             font-family: "Inter", sans-serif;
 
-            background:
-                radial-gradient(circle at top,
-                    rgba(127, 169, 139, 0.08),
-                    transparent 40%),
-                var(--bg);
-
             color: var(--text);
+
+            background:
+                linear-gradient(rgba(7, 17, 13, .88),
+                    rgba(7, 17, 13, .92)),
+
+                url("../Raw/Img/fronds-1869757_1920.jpg");
+
+            background-size: cover;
+
+            background-position: center;
+
+            background-attachment: fixed;
 
             overflow-x: hidden;
         }
 
         a {
+
             text-decoration: none;
+
             color: inherit;
         }
 
         .container {
 
             width: 100%;
+
             max-width: 1180px;
 
             margin: auto;
@@ -74,19 +91,43 @@
             padding: 0 32px;
         }
 
+        /* Background Blur Layer */
+
+        .bg-glow {
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            background:
+
+                radial-gradient(circle at top left,
+                    rgba(127, 169, 139, .08),
+                    transparent 30%),
+
+                radial-gradient(circle at bottom right,
+                    rgba(183, 212, 190, .06),
+                    transparent 35%);
+
+            z-index: -1;
+        }
+
         /* Noise */
 
         .noise {
 
             position: fixed;
+
             inset: 0;
 
             pointer-events: none;
 
-            opacity: .04;
+            opacity: .03;
 
             background-image:
-                radial-gradient(rgba(255, 255, 255, 0.4) 1px,
+                radial-gradient(rgba(255, 255, 255, 0.6) 1px,
                     transparent 1px);
 
             background-size: 4px 4px;
@@ -101,23 +142,27 @@
             display: flex;
 
             justify-content: space-between;
+
             align-items: center;
 
-            padding: 32px 0;
+            padding: 34px 0;
 
             position: sticky;
+
             top: 0;
 
-            backdrop-filter: blur(20px);
-
             z-index: 100;
+
+            backdrop-filter: blur(18px);
+
+            background: rgba(7, 17, 13, 0.45);
         }
 
         .logo {
 
             font-size: 15px;
 
-            letter-spacing: 2px;
+            letter-spacing: 3px;
 
             text-transform: uppercase;
 
@@ -137,7 +182,7 @@
 
             color: var(--text-soft);
 
-            transition: .25s ease;
+            transition: .25s;
         }
 
         .nav-links a:hover {
@@ -149,43 +194,48 @@
 
         .hero {
 
-            min-height: 82vh;
+            min-height: 90vh;
 
             display: flex;
+
             align-items: center;
 
-            padding: 100px 0 140px;
+            padding: 100px 0 120px;
         }
 
-        .hero-content {
+        .hero-layout {
 
-            max-width: 900px;
+            display: grid;
+
+            grid-template-columns: 1.2fr .8fr;
+
+            gap: 80px;
+
+            align-items: center;
         }
 
         .hero-label {
 
             font-size: 12px;
 
-            letter-spacing: 2px;
-
             text-transform: uppercase;
+
+            letter-spacing: 2px;
 
             color: var(--accent);
 
-            margin-bottom: 24px;
+            margin-bottom: 22px;
         }
 
         .hero h1 {
 
-            font-size: clamp(56px, 9vw, 110px);
+            font-size: clamp(58px, 9vw, 110px);
 
             line-height: .92;
 
             letter-spacing: -5px;
 
-            margin-bottom: 28px;
-
-            font-weight: 700;
+            margin-bottom: 30px;
         }
 
         .hero p {
@@ -196,7 +246,7 @@
 
             font-size: 20px;
 
-            line-height: 1.8;
+            line-height: 1.9;
 
             margin-bottom: 42px;
         }
@@ -216,11 +266,11 @@
 
             border-radius: 16px;
 
-            font-size: 14px;
+            border: 1px solid var(--line);
 
             transition: .25s ease;
 
-            border: 1px solid var(--line);
+            font-size: 14px;
         }
 
         .btn-primary {
@@ -239,45 +289,98 @@
 
         .btn-secondary {
 
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.04);
 
             backdrop-filter: blur(20px);
         }
 
         .btn-secondary:hover {
 
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.08);
 
             transform: translateY(-2px);
+        }
+
+        /* Hero Image */
+
+        .hero-image-wrap {
+
+            position: relative;
+        }
+
+        .hero-image {
+
+            width: 100%;
+
+            border-radius: 34px;
+
+            overflow: hidden;
+
+            border: 1px solid rgba(255, 255, 255, .08);
+
+            box-shadow:
+                0 20px 80px rgba(0, 0, 0, .45);
+
+            backdrop-filter: blur(20px);
+        }
+
+        .hero-image img {
+
+            width: 100%;
+
+            display: block;
+
+            object-fit: cover;
+
+            aspect-ratio: 4/5;
+
+            filter:
+                saturate(.85)
+                brightness(.85)
+                contrast(1.05);
+        }
+
+        .hero-image::after {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                linear-gradient(to top,
+                    rgba(7, 17, 13, .45),
+                    transparent 50%);
         }
 
         /* Sections */
 
         section {
 
-            padding: 140px 0;
+            padding: 130px 0;
         }
 
         .section-label {
 
             font-size: 12px;
 
-            letter-spacing: 2px;
-
             text-transform: uppercase;
+
+            letter-spacing: 2px;
 
             color: var(--accent);
 
-            margin-bottom: 26px;
+            margin-bottom: 24px;
         }
 
         .section-title {
 
-            font-size: 42px;
+            font-size: 44px;
 
             line-height: 1.2;
 
-            margin-bottom: 22px;
+            margin-bottom: 20px;
         }
 
         .section-desc {
@@ -286,7 +389,7 @@
 
             color: var(--text-soft);
 
-            line-height: 1.8;
+            line-height: 1.9;
 
             margin-bottom: 70px;
         }
@@ -308,11 +411,11 @@
 
             border: 1px solid var(--line);
 
-            border-radius: 28px;
+            border-radius: 30px;
 
             padding: 30px;
 
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(18px);
 
             transition: .35s ease;
         }
@@ -321,22 +424,22 @@
 
             transform: translateY(-6px);
 
-            border-color: rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.07);
 
-            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.14);
         }
 
         .card-tag {
 
             font-size: 12px;
 
-            color: var(--accent);
-
             letter-spacing: 1px;
 
-            margin-bottom: 18px;
-
             text-transform: uppercase;
+
+            color: var(--accent);
+
+            margin-bottom: 18px;
         }
 
         .card h3 {
@@ -352,7 +455,7 @@
 
             line-height: 1.8;
 
-            margin-bottom: 28px;
+            margin-bottom: 26px;
         }
 
         .card a {
@@ -368,11 +471,38 @@
 
             display: grid;
 
-            grid-template-columns: 1.2fr .8fr;
+            grid-template-columns: 1fr 1fr;
 
             gap: 60px;
 
-            align-items: start;
+            align-items: center;
+        }
+
+        .about-image {
+
+            overflow: hidden;
+
+            border-radius: 30px;
+
+            border: 1px solid var(--line);
+
+            box-shadow:
+                0 20px 70px rgba(0, 0, 0, .4);
+        }
+
+        .about-image img {
+
+            width: 100%;
+
+            display: block;
+
+            object-fit: cover;
+
+            aspect-ratio: 1/1;
+
+            filter:
+                brightness(.78)
+                saturate(.8);
         }
 
         .about-text p {
@@ -384,67 +514,19 @@
             margin-bottom: 24px;
         }
 
-        .terminal {
-
-            background: #09130F;
-
-            border: 1px solid var(--line);
-
-            border-radius: 24px;
-
-            overflow: hidden;
-        }
-
-        .terminal-top {
-
-            display: flex;
-
-            gap: 8px;
-
-            padding: 14px 18px;
-
-            border-bottom: 1px solid var(--line);
-        }
-
-        .dot {
-
-            width: 10px;
-            height: 10px;
-
-            border-radius: 50%;
-
-            background: rgba(255, 255, 255, 0.18);
-        }
-
-        .terminal-body {
-
-            padding: 28px;
-
-            font-size: 14px;
-
-            line-height: 2;
-
-            color: var(--accent-light);
-        }
-
-        .terminal-body span {
-
-            color: var(--text-soft);
-        }
-
         /* Contact */
 
         .contact-card {
 
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
 
             border: 1px solid var(--line);
 
             border-radius: 34px;
 
-            padding: 54px;
+            padding: 56px;
 
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(24px);
         }
 
         .contact-card h2 {
@@ -456,13 +538,13 @@
 
         .contact-card p {
 
-            color: var(--text-soft);
-
             max-width: 620px;
 
-            margin-bottom: 36px;
+            color: var(--text-soft);
 
             line-height: 1.8;
+
+            margin-bottom: 36px;
         }
 
         .contact-links {
@@ -482,16 +564,16 @@
 
             border: 1px solid var(--line);
 
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.04);
 
-            transition: .25s ease;
+            transition: .25s;
         }
 
         .contact-links a:hover {
 
             transform: translateY(-2px);
 
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.08);
         }
 
         /* Footer */
@@ -507,8 +589,9 @@
 
         /* Responsive */
 
-        @media(max-width: 900px) {
+        @media(max-width: 980px) {
 
+            .hero-layout,
             .about-layout {
 
                 grid-template-columns: 1fr;
@@ -517,18 +600,11 @@
             .hero {
 
                 min-height: auto;
-
-                padding-top: 80px;
             }
 
             section {
 
                 padding: 90px 0;
-            }
-
-            .contact-card {
-
-                padding: 36px;
             }
         }
 
@@ -543,16 +619,16 @@
 
                 flex-direction: column;
 
-                gap: 20px;
+                gap: 18px;
             }
 
             .nav-links {
 
-                gap: 18px;
-
                 flex-wrap: wrap;
 
                 justify-content: center;
+
+                gap: 16px;
             }
 
             .hero h1 {
@@ -567,7 +643,12 @@
 
             .section-title {
 
-                font-size: 32px;
+                font-size: 34px;
+            }
+
+            .contact-card {
+
+                padding: 36px;
             }
 
             .contact-card h2 {
@@ -580,11 +661,13 @@
 
 <body>
 
+    <div class="bg-glow"></div>
+
     <div class="noise"></div>
 
     <div class="container">
 
-        <!-- Nav -->
+        <!-- NAV -->
 
         <nav class="nav">
 
@@ -604,35 +687,52 @@
 
         </nav>
 
-        <!-- Hero -->
+        <!-- HERO -->
 
         <header class="hero">
 
-            <div class="hero-content">
+            <div class="hero-layout">
 
-                <div class="hero-label">
-                    Software Engineer · Unity Developer
+                <div class="hero-content">
+
+                    <div class="hero-label">
+                        Software Engineer · Unity Developer
+                    </div>
+
+                    <h1>
+                        Building calm digital systems
+                        for games and software.
+                    </h1>
+
+                    <p>
+                        Focused on game systems, interaction design,
+                        scalable architecture and immersive development workflows.
+                    </p>
+
+                    <div class="actions">
+
+                        <a href="#projects" class="btn btn-primary">
+                            Explore Projects
+                        </a>
+
+                        <a href="#contact" class="btn btn-secondary">
+                            Contact Me
+                        </a>
+
+                    </div>
+
                 </div>
 
-                <h1>
-                    Building calm digital systems
-                    for games and software.
-                </h1>
+                <!-- HERO IMAGE -->
 
-                <p>
-                    Focused on game systems, interaction design,
-                    scalable architecture and immersive development workflows.
-                </p>
+                <div class="hero-image-wrap">
 
-                <div class="actions">
+                    <div class="hero-image">
 
-                    <a href="#projects" class="btn btn-primary">
-                        Explore Projects
-                    </a>
+                        <img src="../Raw/Img/nature-3808354_1920.jpg"
+                            alt="Profile Picture">
 
-                    <a href="#contact" class="btn btn-secondary">
-                        Contact Me
-                    </a>
+                    </div>
 
                 </div>
 
@@ -640,7 +740,7 @@
 
         </header>
 
-        <!-- Projects -->
+        <!-- PROJECTS -->
 
         <section id="projects">
 
@@ -671,8 +771,8 @@
                     </h3>
 
                     <p>
-                        Turn-based combat framework with modular deck architecture,
-                        event-driven gameplay flow and scalable battle systems.
+                        Turn-based combat framework with modular deck architecture
+                        and scalable gameplay systems.
                     </p>
 
                     <a href="Project_CardGame.html">
@@ -693,7 +793,7 @@
 
                     <p>
                         Restaurant simulation focused on AI customer behavior,
-                        cooking workflow systems and management mechanics.
+                        cooking workflow and management mechanics.
                     </p>
 
                     <a href="Project_CookGame.html">
@@ -714,7 +814,7 @@
 
                     <p>
                         Lightweight probability simulation with visual feedback
-                        and interaction-focused statistical experiments.
+                        and interaction-driven statistical experiments.
                     </p>
 
                     <a href="../touzi.html">
@@ -734,8 +834,8 @@
                     </h3>
 
                     <p>
-                        Single-page application prototype exploring smooth transitions,
-                        state-driven rendering and navigation architecture.
+                        Single-page application prototype exploring transitions,
+                        rendering workflow and navigation architecture.
                     </p>
 
                     <a href="../spa.html">
@@ -756,7 +856,7 @@
 
                     <p>
                         Gameplay interaction prototype exploring recipes,
-                        kitchen workflow and tactile player feedback systems.
+                        kitchen workflow and tactile player feedback.
                     </p>
 
                     <a href="../cook/index.html">
@@ -769,7 +869,7 @@
 
         </section>
 
-        <!-- About -->
+        <!-- ABOUT -->
 
         <section id="about">
 
@@ -778,6 +878,13 @@
             </div>
 
             <div class="about-layout">
+
+                <div class="about-image">
+
+                    <img src="../Raw/Img/fronds-1869757_1920.jpg"
+                        alt="Forest">
+
+                </div>
 
                 <div class="about-text">
 
@@ -788,8 +895,6 @@
                     <p>
                         I'm a software engineer and Unity developer focused on
                         interaction systems, game architecture and scalable workflows.
-                        I enjoy building clean systems that balance usability,
-                        structure and immersive experience.
                     </p>
 
                     <p>
@@ -801,37 +906,11 @@
 
                 </div>
 
-                <div class="terminal">
-
-                    <div class="terminal-top">
-
-                        <div class="dot"></div>
-                        <div class="dot"></div>
-                        <div class="dot"></div>
-
-                    </div>
-
-                    <div class="terminal-body">
-
-                        ~/developer/profile<br><br>
-
-                        skills <span>→</span> Unity / C# / Java / UI<br>
-
-                        focus <span>→</span> Game Systems<br>
-
-                        style <span>→</span> Minimal & Structured<br>
-
-                        current <span>→</span> Simulation Projects<br>
-
-                    </div>
-
-                </div>
-
             </div>
 
         </section>
 
-        <!-- Contact -->
+        <!-- CONTACT -->
 
         <section id="contact">
 
@@ -867,7 +946,7 @@
 
         </section>
 
-        <!-- Footer -->
+        <!-- FOOTER -->
 
         <footer>
 
@@ -878,7 +957,7 @@
 
     </div>
 
-    <!-- GSAP Animation -->
+    <!-- GSAP -->
 
     <script>
 
@@ -888,8 +967,7 @@
 
             opacity: 0,
             y: 20,
-            duration: 1,
-            ease: "power3.out"
+            duration: 1
         })
 
         gsap.from(".hero h1", {
@@ -906,8 +984,7 @@
             opacity: 0,
             y: 24,
             duration: 1,
-            delay: .25,
-            ease: "power2.out"
+            delay: .3
         })
 
         gsap.from(".actions", {
@@ -915,7 +992,16 @@
             opacity: 0,
             y: 20,
             duration: 1,
-            delay: .4
+            delay: .45
+        })
+
+        gsap.from(".hero-image", {
+
+            opacity: 0,
+            scale: .92,
+            duration: 1.4,
+            delay: .2,
+            ease: "power3.out"
         })
 
         gsap.utils.toArray(".card").forEach(card => {
@@ -936,29 +1022,29 @@
 
         })
 
+        gsap.from(".about-image", {
+
+            scrollTrigger: {
+
+                trigger: ".about-image",
+                start: "top 82%"
+            },
+
+            opacity: 0,
+            x: -40,
+            duration: 1.2
+        })
+
         gsap.from(".about-text", {
 
             scrollTrigger: {
 
                 trigger: ".about-text",
-                start: "top 80%"
+                start: "top 82%"
             },
 
             opacity: 0,
-            y: 40,
-            duration: 1
-        })
-
-        gsap.from(".terminal", {
-
-            scrollTrigger: {
-
-                trigger: ".terminal",
-                start: "top 85%"
-            },
-
-            opacity: 0,
-            y: 30,
+            x: 40,
             duration: 1.2
         })
 
@@ -979,10 +1065,10 @@
 
         document.addEventListener("mousemove", (e) => {
 
-            gsap.to(".noise", {
+            gsap.to(".bg-glow", {
 
-                x: e.clientX * 0.008,
-                y: e.clientY * 0.008,
+                x: e.clientX * 0.01,
+                y: e.clientY * 0.01,
 
                 duration: 2,
 
