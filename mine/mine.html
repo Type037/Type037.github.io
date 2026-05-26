@@ -1,247 +1,998 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Software Engineer's Blog</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Sun | Software Engineer</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f0f0;
+        :root {
+
+            /* Forest Theme */
+
+            --bg: #07110D;
+            --bg-soft: #0D1813;
+
+            --card: rgba(255, 255, 255, 0.04);
+
+            --text: #E8ECE9;
+            --text-soft: #93A29B;
+
+            --line: rgba(255, 255, 255, 0.08);
+
+            --accent: #7FA98B;
+            --accent-light: #B7D4BE;
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+
+            font-family: "Inter", sans-serif;
+
+            background:
+                radial-gradient(circle at top,
+                    rgba(127, 169, 139, 0.08),
+                    transparent 40%),
+                var(--bg);
+
+            color: var(--text);
+
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
         }
 
         .container {
-            width: 80%;
-            max-width: 800px;
-            text-align: center;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+
+            width: 100%;
+            max-width: 1180px;
+
+            margin: auto;
+
+            padding: 0 32px;
         }
 
-        img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 20px;
+        /* Noise */
+
+        .noise {
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            opacity: .04;
+
+            background-image:
+                radial-gradient(rgba(255, 255, 255, 0.4) 1px,
+                    transparent 1px);
+
+            background-size: 4px 4px;
+
+            z-index: 999;
         }
 
-        h1 {
-            font-size: 120px;
-            margin-bottom: 20px;
-            color: #fafafa;
+        /* Nav */
+
+        .nav {
+
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 32px 0;
+
+            position: sticky;
+            top: 0;
+
+            backdrop-filter: blur(20px);
+
+            z-index: 100;
         }
 
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            border: none;
-            background-color: #007BFF;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
+        .logo {
+
+            font-size: 15px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            color: var(--accent-light);
         }
 
-        button:hover {
-            background-color: #0056b3;
+        .nav-links {
+
+            display: flex;
+
+            gap: 28px;
         }
+
+        .nav-links a {
+
+            font-size: 14px;
+
+            color: var(--text-soft);
+
+            transition: .25s ease;
+        }
+
+        .nav-links a:hover {
+
+            color: var(--text);
+        }
+
+        /* Hero */
+
+        .hero {
+
+            min-height: 82vh;
+
+            display: flex;
+            align-items: center;
+
+            padding: 100px 0 140px;
+        }
+
+        .hero-content {
+
+            max-width: 900px;
+        }
+
+        .hero-label {
+
+            font-size: 12px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            color: var(--accent);
+
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+
+            font-size: clamp(56px, 9vw, 110px);
+
+            line-height: .92;
+
+            letter-spacing: -5px;
+
+            margin-bottom: 28px;
+
+            font-weight: 700;
+        }
+
+        .hero p {
+
+            max-width: 620px;
+
+            color: var(--text-soft);
+
+            font-size: 20px;
+
+            line-height: 1.8;
+
+            margin-bottom: 42px;
+        }
+
+        .actions {
+
+            display: flex;
+
+            gap: 18px;
+
+            flex-wrap: wrap;
+        }
+
+        .btn {
+
+            padding: 14px 22px;
+
+            border-radius: 16px;
+
+            font-size: 14px;
+
+            transition: .25s ease;
+
+            border: 1px solid var(--line);
+        }
+
+        .btn-primary {
+
+            background: var(--accent);
+
+            color: #07110D;
+        }
+
+        .btn-primary:hover {
+
+            transform: translateY(-2px);
+
+            background: var(--accent-light);
+        }
+
+        .btn-secondary {
+
+            background: rgba(255, 255, 255, 0.03);
+
+            backdrop-filter: blur(20px);
+        }
+
+        .btn-secondary:hover {
+
+            background: rgba(255, 255, 255, 0.06);
+
+            transform: translateY(-2px);
+        }
+
+        /* Sections */
 
         section {
-            margin-top: 30px;
-            text-align: left;
+
+            padding: 140px 0;
         }
 
-        section h2 {
-            margin-bottom: 10px;
-            color: #007BFF;
+        .section-label {
+
+            font-size: 12px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            color: var(--accent);
+
+            margin-bottom: 26px;
         }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
+        .section-title {
+
+            font-size: 42px;
+
+            line-height: 1.2;
+
+            margin-bottom: 22px;
         }
 
-        ul li {
-            margin-bottom: 10px;
+        .section-desc {
+
+            max-width: 680px;
+
+            color: var(--text-soft);
+
+            line-height: 1.8;
+
+            margin-bottom: 70px;
         }
 
-        ul li a {
-            color: #007BFF;
-            text-decoration: none;
+        /* Cards */
+
+        .grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+
+            gap: 24px;
         }
 
-        ul li a:hover {
-            text-decoration: underline;
+        .card {
+
+            background: var(--card);
+
+            border: 1px solid var(--line);
+
+            border-radius: 28px;
+
+            padding: 30px;
+
+            backdrop-filter: blur(20px);
+
+            transition: .35s ease;
         }
 
-        .social-links a {
-            margin: 0 10px;
+        .card:hover {
+
+            transform: translateY(-6px);
+
+            border-color: rgba(255, 255, 255, 0.14);
+
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .card-tag {
+
+            font-size: 12px;
+
+            color: var(--accent);
+
+            letter-spacing: 1px;
+
+            margin-bottom: 18px;
+
+            text-transform: uppercase;
+        }
+
+        .card h3 {
+
             font-size: 24px;
-            color: #333;
+
+            margin-bottom: 16px;
         }
 
-        .social-links a:hover {
-            color: #007BFF;
-        }
-        .title-box {
-            background-image: url('../Raw/Img/fronds-1869757_1920.jpg');
-            background-size: cover;
-            background-position: center;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        .sidebar {
-            border-radius: 0px 30px 30px 0px;
-            position: fixed;
-            top: 200px;
-            left: 0;
-            bottom: 0;
-            width: 100px; 
-            height: 290px;/* Adjust as needed */
-            background-color: white;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            z-index: 1000; /* Ensure it's above other content */
+        .card p {
+
+            color: var(--text-soft);
+
+            line-height: 1.8;
+
+            margin-bottom: 28px;
         }
 
-        .sidebar ul {
-            list-style-type: none;
-            padding: 20px 0;
-            margin: 0;
+        .card a {
+
+            color: var(--accent-light);
+
+            font-size: 14px;
         }
 
-        .sidebar li {
-            margin-bottom: 10px;
-            text-align: center;
+        /* About */
+
+        .about-layout {
+
+            display: grid;
+
+            grid-template-columns: 1.2fr .8fr;
+
+            gap: 60px;
+
+            align-items: start;
         }
 
-        .sidebar a {
-            display: block;
-            padding: 10px;
-            color: #000000;
-            text-decoration: none;
+        .about-text p {
+
+            color: var(--text-soft);
+
+            line-height: 1.9;
+
+            margin-bottom: 24px;
         }
 
-        .sidebar a:hover {
-            background-color: #f0f0f0;
-            text-decoration: none; 
+        .terminal {
+
+            background: #09130F;
+
+            border: 1px solid var(--line);
+
+            border-radius: 24px;
+
+            overflow: hidden;
         }
 
+        .terminal-top {
 
-    </style>
-</head>
-<body background="../Raw/Img/fronds-1869757_1920.jpg">
-    
-    <div class="container">
-        
-        <div class="title-box"><h1 id="title">Welcome to My Blog</h1></div>
-        <div class="sidebar">
-            <ul>
-                <li><a href="#about">About Me</a></li>
-                <li><a href="#skills">skills</a></li>
-                <li><a href="#blogs">Blogs</a></li>
-                <li><a href="#projects">projects</a></li>
-                <li><a href="#contact">contact</a></li>
-            </ul>
-        </div>
+            display: flex;
 
-        <img src="../Raw/Img/nature-3808354_1920.jpg" alt="Profile Picture">
-        <h2 id="intro">Hello! I'm a software engineer student about coding and technology. Follow my blog for insights, tutorials, and more.</h2>
-        <button onclick="toggleLanguage()">切换语言</button>
-        
-        <section id="about">
-            <h2 id="about-title">About Me</h2>
-            <p id="about-text">I have over 10 years of experience in software development. I specialize in web development, data science, and AI.</p>
-        </section>
-        
-        <section id="skills">
-            <h2 id="skills-title">Skills</h2>
-            <ul id="skills-list">
-                <li>Unity</li>
-                <li>UGUI</li>
-            </ul>
-        </section>
+            gap: 8px;
 
-        <section id="blogs">
-            <h2  id="blogs-title">Blogs</h2>
-            <ul id="blogs-list">
-                <li><a href="blog1.html">《CentOS 7系统下使用Docker安装elk（Elasticsearch、Logstash、Kibana）套件》</a></li>
-                
-            </ul>
-        </section>
-        
-        <section id="projects">
-            <h2 id="projects-title">Projects</h2>
-            <ul id="projects-list">
-                <li><a href="Project_CardGame.html">卡牌游戏</a></li>
-                <li><a href="Project_CookGame.html">烹饪游戏</a></li>
-                <li><a href="../touzi.html">骰子?</a></li>
-                <li><a href="../spa.html">spa?</a></li>
-                <li><a href="../cook/index.html">游戏?</a></li>
-            </ul>
-        </section>
-        
-        <section id="contact">
-            <h2 id="contact-title">Contact</h2>
-            <ul id="contact-list">
-                <li><a href="https://github.com/Type037">GitHub</a></li>
-                <li><a href="https://linkedin.com/in/yourusername">LinkedIn</a></li>
-                <li><a href="mailto:your.email@example.com">Email</a></li>
-            </ul>
-            <div class="social-links">
-                <a href="https://github.com/Type037" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/yourusername" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="mailto:your.email@example.com"><i class="fas fa-envelope"></i></a>
-            </div>
-        </section>
-    </div>
-    <script>
-        let isEnglish = false; // Start with Chinese content
+            padding: 14px 18px;
 
-        function toggleLanguage() {
-            const title = document.getElementById('title');
-            const intro = document.getElementById('intro');
-            const aboutTitle = document.getElementById('about-title');
-            const aboutText = document.getElementById('about-text');
-            const skillsTitle = document.getElementById('skills-title');
-            const blogsTitle = document.getElementById('blogs-title');
-            const projectsTitle = document.getElementById('projects-title');
-            const contactTitle = document.getElementById('contact-title');
+            border-bottom: 1px solid var(--line);
+        }
 
-            if (isEnglish) {
-                title.innerText = '欢迎来到我的博客';
-                intro.innerText = '你好！我是一名对编码和技术充满热情的学生。关注我的博客，获取见解、教程等更多内容。';
-                aboutTitle.innerText = '关于我';
-                aboutText.innerHTML = '你好！我叫孙圆桐，是一名对编码和技术充满热情的学生。从我写下第一行代码开始，我就被编程提供的无限可能所吸引。无论是构建动态网站应用还是创建沉浸式游戏，我都喜欢探索创造力与技术的交汇点。<br><br>我专注于Web技术和游戏开发。多年来，我掌握了各种编程语言和框架，包括JavaScript、HTML、CSS以及像Unity这样的游戏开发平台。我的项目范围从互动网站到引人入胜的视频游戏，我总是渴望学习更多并迎接新的挑战。<br><br>通过这个博客，我希望与志同道合的爱好者分享我的知识和经验。这里你会发现各种内容，包括教程、项目展示以及对编码和技术世界的个人见解。无论你是初学者还是有经验的开发者，我希望你能找到一些有价值和启发的东西。<br><br>感谢你访问我的博客！让我们一起踏上这段激动人心的旅程。';
-                skillsTitle.innerText = '技能';
-                blogsTitle.innerText = '博客'
-                projectsTitle.innerText = '项目';
-                contactTitle.innerText = '联系我';
-            } else {
-                title.innerText = 'Welcome to My Blog';
-                intro.innerText = "Hello! I'm a student passionate about coding and technology. Follow my blog for insights, tutorials, and more.";
-                aboutTitle.innerText = 'About Me';
-                aboutText.innerHTML = 'Hello! My name is SunYuantong, and I\'m a student with a deep passion for coding and technology. Ever since I wrote my first line of code, I have been captivated by the endless possibilities that programming offers. Whether it\'s building dynamic web applications or creating immersive games, I love exploring the intersection of creativity and technology.<br><br>I specialize in web technologies and game development. Over the years, I have honed my skills in various programming languages and frameworks, including JavaScript, HTML, CSS, and game development platforms like Unity. My projects range from interactive websites to engaging video games, and I\'m always eager to learn more and take on new challenges.<br><br>Through this blog, I aim to share my knowledge and experiences with fellow enthusiasts. You will find a variety of content here, including tutorials, project showcases, and personal insights into the world of coding and technology. Whether you\'re a beginner or an experienced developer, I hope you\'ll find something valuable and inspiring.<br><br>Thank you for visiting my blog! Let\'s embark on this exciting journey together.';
-                skillsTitle.innerText = 'Skills';
-                blogsTitle.innerText = 'Blogs'
-                projectsTitle.innerText = 'Projects';
-                contactTitle.innerText = 'Contact';
+        .dot {
+
+            width: 10px;
+            height: 10px;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .terminal-body {
+
+            padding: 28px;
+
+            font-size: 14px;
+
+            line-height: 2;
+
+            color: var(--accent-light);
+        }
+
+        .terminal-body span {
+
+            color: var(--text-soft);
+        }
+
+        /* Contact */
+
+        .contact-card {
+
+            background: rgba(255, 255, 255, 0.03);
+
+            border: 1px solid var(--line);
+
+            border-radius: 34px;
+
+            padding: 54px;
+
+            backdrop-filter: blur(20px);
+        }
+
+        .contact-card h2 {
+
+            font-size: 42px;
+
+            margin-bottom: 18px;
+        }
+
+        .contact-card p {
+
+            color: var(--text-soft);
+
+            max-width: 620px;
+
+            margin-bottom: 36px;
+
+            line-height: 1.8;
+        }
+
+        .contact-links {
+
+            display: flex;
+
+            gap: 18px;
+
+            flex-wrap: wrap;
+        }
+
+        .contact-links a {
+
+            padding: 14px 20px;
+
+            border-radius: 14px;
+
+            border: 1px solid var(--line);
+
+            background: rgba(255, 255, 255, 0.03);
+
+            transition: .25s ease;
+        }
+
+        .contact-links a:hover {
+
+            transform: translateY(-2px);
+
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        /* Footer */
+
+        footer {
+
+            padding: 40px 0 70px;
+
+            color: var(--text-soft);
+
+            font-size: 14px;
+        }
+
+        /* Responsive */
+
+        @media(max-width: 900px) {
+
+            .about-layout {
+
+                grid-template-columns: 1fr;
             }
 
-            isEnglish = !isEnglish;
+            .hero {
+
+                min-height: auto;
+
+                padding-top: 80px;
+            }
+
+            section {
+
+                padding: 90px 0;
+            }
+
+            .contact-card {
+
+                padding: 36px;
+            }
         }
 
-        // Immediately toggle to set initial language correctly
-        toggleLanguage();
+        @media(max-width: 640px) {
+
+            .container {
+
+                padding: 0 20px;
+            }
+
+            .nav {
+
+                flex-direction: column;
+
+                gap: 20px;
+            }
+
+            .nav-links {
+
+                gap: 18px;
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+            }
+
+            .hero h1 {
+
+                letter-spacing: -3px;
+            }
+
+            .hero p {
+
+                font-size: 17px;
+            }
+
+            .section-title {
+
+                font-size: 32px;
+            }
+
+            .contact-card h2 {
+
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="noise"></div>
+
+    <div class="container">
+
+        <!-- Nav -->
+
+        <nav class="nav">
+
+            <div class="logo">
+                Sun.
+            </div>
+
+            <div class="nav-links">
+
+                <a href="#projects">Projects</a>
+
+                <a href="#about">About</a>
+
+                <a href="#contact">Contact</a>
+
+            </div>
+
+        </nav>
+
+        <!-- Hero -->
+
+        <header class="hero">
+
+            <div class="hero-content">
+
+                <div class="hero-label">
+                    Software Engineer · Unity Developer
+                </div>
+
+                <h1>
+                    Building calm digital systems
+                    for games and software.
+                </h1>
+
+                <p>
+                    Focused on game systems, interaction design,
+                    scalable architecture and immersive development workflows.
+                </p>
+
+                <div class="actions">
+
+                    <a href="#projects" class="btn btn-primary">
+                        Explore Projects
+                    </a>
+
+                    <a href="#contact" class="btn btn-secondary">
+                        Contact Me
+                    </a>
+
+                </div>
+
+            </div>
+
+        </header>
+
+        <!-- Projects -->
+
+        <section id="projects">
+
+            <div class="section-label">
+                Selected Work
+            </div>
+
+            <h2 class="section-title">
+                Systems, tools and interactive experiences.
+            </h2>
+
+            <p class="section-desc">
+                A collection of game systems, gameplay prototypes
+                and software experiments focused on architecture,
+                interaction and long-term scalability.
+            </p>
+
+            <div class="grid">
+
+                <div class="card">
+
+                    <div class="card-tag">
+                        Unity / Game System
+                    </div>
+
+                    <h3>
+                        Card Game
+                    </h3>
+
+                    <p>
+                        Turn-based combat framework with modular deck architecture,
+                        event-driven gameplay flow and scalable battle systems.
+                    </p>
+
+                    <a href="Project_CardGame.html">
+                        View Project →
+                    </a>
+
+                </div>
+
+                <div class="card">
+
+                    <div class="card-tag">
+                        Simulation
+                    </div>
+
+                    <h3>
+                        Cooking Simulator
+                    </h3>
+
+                    <p>
+                        Restaurant simulation focused on AI customer behavior,
+                        cooking workflow systems and management mechanics.
+                    </p>
+
+                    <a href="Project_CookGame.html">
+                        View Project →
+                    </a>
+
+                </div>
+
+                <div class="card">
+
+                    <div class="card-tag">
+                        Experiment
+                    </div>
+
+                    <h3>
+                        Dice Experiment
+                    </h3>
+
+                    <p>
+                        Lightweight probability simulation with visual feedback
+                        and interaction-focused statistical experiments.
+                    </p>
+
+                    <a href="../touzi.html">
+                        Open Demo →
+                    </a>
+
+                </div>
+
+                <div class="card">
+
+                    <div class="card-tag">
+                        Frontend
+                    </div>
+
+                    <h3>
+                        SPA Demo
+                    </h3>
+
+                    <p>
+                        Single-page application prototype exploring smooth transitions,
+                        state-driven rendering and navigation architecture.
+                    </p>
+
+                    <a href="../spa.html">
+                        Open Demo →
+                    </a>
+
+                </div>
+
+                <div class="card">
+
+                    <div class="card-tag">
+                        Prototype
+                    </div>
+
+                    <h3>
+                        Cooking Prototype
+                    </h3>
+
+                    <p>
+                        Gameplay interaction prototype exploring recipes,
+                        kitchen workflow and tactile player feedback systems.
+                    </p>
+
+                    <a href="../cook/index.html">
+                        View Prototype →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- About -->
+
+        <section id="about">
+
+            <div class="section-label">
+                About
+            </div>
+
+            <div class="about-layout">
+
+                <div class="about-text">
+
+                    <h2 class="section-title">
+                        Designing systems with clarity and restraint.
+                    </h2>
+
+                    <p>
+                        I'm a software engineer and Unity developer focused on
+                        interaction systems, game architecture and scalable workflows.
+                        I enjoy building clean systems that balance usability,
+                        structure and immersive experience.
+                    </p>
+
+                    <p>
+                        My interests range from gameplay programming and UI systems
+                        to simulation mechanics and development tooling.
+                        I value minimal interfaces, stable architecture
+                        and thoughtful interaction design.
+                    </p>
+
+                </div>
+
+                <div class="terminal">
+
+                    <div class="terminal-top">
+
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+
+                    </div>
+
+                    <div class="terminal-body">
+
+                        ~/developer/profile<br><br>
+
+                        skills <span>→</span> Unity / C# / Java / UI<br>
+
+                        focus <span>→</span> Game Systems<br>
+
+                        style <span>→</span> Minimal & Structured<br>
+
+                        current <span>→</span> Simulation Projects<br>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Contact -->
+
+        <section id="contact">
+
+            <div class="contact-card">
+
+                <div class="section-label">
+                    Contact
+                </div>
+
+                <h2>
+                    Let's build something meaningful.
+                </h2>
+
+                <p>
+                    Interested in gameplay systems,
+                    software architecture or interactive experiences?
+                    Feel free to reach out.
+                </p>
+
+                <div class="contact-links">
+
+                    <a href="https://github.com/Type037" target="_blank">
+                        GitHub
+                    </a>
+
+                    <a href="mailto:your.email@example.com">
+                        Email
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Footer -->
+
+        <footer>
+
+            © 2026 Sun Yuantong.
+            Built with calm systems and dark green pixels.
+
+        </footer>
+
+    </div>
+
+    <!-- GSAP Animation -->
+
+    <script>
+
+        gsap.registerPlugin(ScrollTrigger)
+
+        gsap.from(".hero-label", {
+
+            opacity: 0,
+            y: 20,
+            duration: 1,
+            ease: "power3.out"
+        })
+
+        gsap.from(".hero h1", {
+
+            opacity: 0,
+            y: 40,
+            duration: 1.2,
+            delay: .1,
+            ease: "power3.out"
+        })
+
+        gsap.from(".hero p", {
+
+            opacity: 0,
+            y: 24,
+            duration: 1,
+            delay: .25,
+            ease: "power2.out"
+        })
+
+        gsap.from(".actions", {
+
+            opacity: 0,
+            y: 20,
+            duration: 1,
+            delay: .4
+        })
+
+        gsap.utils.toArray(".card").forEach(card => {
+
+            gsap.from(card, {
+
+                scrollTrigger: {
+
+                    trigger: card,
+                    start: "top 88%"
+                },
+
+                opacity: 0,
+                y: 40,
+                duration: 1,
+                ease: "power2.out"
+            })
+
+        })
+
+        gsap.from(".about-text", {
+
+            scrollTrigger: {
+
+                trigger: ".about-text",
+                start: "top 80%"
+            },
+
+            opacity: 0,
+            y: 40,
+            duration: 1
+        })
+
+        gsap.from(".terminal", {
+
+            scrollTrigger: {
+
+                trigger: ".terminal",
+                start: "top 85%"
+            },
+
+            opacity: 0,
+            y: 30,
+            duration: 1.2
+        })
+
+        gsap.from(".contact-card", {
+
+            scrollTrigger: {
+
+                trigger: ".contact-card",
+                start: "top 85%"
+            },
+
+            opacity: 0,
+            y: 40,
+            duration: 1
+        })
+
+        // subtle mouse movement
+
+        document.addEventListener("mousemove", (e) => {
+
+            gsap.to(".noise", {
+
+                x: e.clientX * 0.008,
+                y: e.clientY * 0.008,
+
+                duration: 2,
+
+                ease: "power1.out"
+            })
+
+        })
+
     </script>
+
 </body>
+
 </html>
