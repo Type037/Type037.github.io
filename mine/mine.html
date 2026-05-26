@@ -2,17 +2,21 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
 
     <title>Sun | Software Engineer</title>
 
     <!-- Fonts -->
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
 
     <!-- GSAP -->
 
@@ -27,13 +31,13 @@
 
             --bg-soft: #0D1813;
 
-            --card: rgba(255, 255, 255, 0.05);
+            --card: rgba(255,255,255,.05);
 
             --text: #E8ECE9;
 
             --text-soft: #93A29B;
 
-            --line: rgba(255, 255, 255, 0.08);
+            --line: rgba(255,255,255,.08);
 
             --accent: #7FA98B;
 
@@ -59,8 +63,8 @@
             color: var(--text);
 
             background:
-                linear-gradient(rgba(7, 17, 13, .88),
-                    rgba(7, 17, 13, .92)),
+                linear-gradient(rgba(7,17,13,.88),
+                    rgba(7,17,13,.92)),
 
                 url("../Raw/Img/fronds-1869757_1920.jpg");
 
@@ -91,7 +95,7 @@
             padding: 0 32px;
         }
 
-        /* Background Blur Layer */
+        /* Glow */
 
         .bg-glow {
 
@@ -104,11 +108,11 @@
             background:
 
                 radial-gradient(circle at top left,
-                    rgba(127, 169, 139, .08),
+                    rgba(127,169,139,.08),
                     transparent 30%),
 
                 radial-gradient(circle at bottom right,
-                    rgba(183, 212, 190, .06),
+                    rgba(183,212,190,.06),
                     transparent 35%);
 
             z-index: -1;
@@ -127,7 +131,7 @@
             opacity: .03;
 
             background-image:
-                radial-gradient(rgba(255, 255, 255, 0.6) 1px,
+                radial-gradient(rgba(255,255,255,.6) 1px,
                     transparent 1px);
 
             background-size: 4px 4px;
@@ -155,7 +159,7 @@
 
             backdrop-filter: blur(18px);
 
-            background: rgba(7, 17, 13, 0.45);
+            background: rgba(7,17,13,.45);
         }
 
         .logo {
@@ -289,39 +293,30 @@
 
         .btn-secondary {
 
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255,255,255,.04);
 
             backdrop-filter: blur(20px);
         }
 
         .btn-secondary:hover {
 
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255,255,255,.08);
 
             transform: translateY(-2px);
         }
 
         /* Hero Image */
 
-        .hero-image-wrap {
-
-            position: relative;
-        }
-
         .hero-image {
-
-            width: 100%;
-
-            border-radius: 34px;
 
             overflow: hidden;
 
-            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 34px;
+
+            border: 1px solid rgba(255,255,255,.08);
 
             box-shadow:
-                0 20px 80px rgba(0, 0, 0, .45);
-
-            backdrop-filter: blur(20px);
+                0 20px 80px rgba(0,0,0,.45);
         }
 
         .hero-image img {
@@ -330,35 +325,33 @@
 
             display: block;
 
-            object-fit: cover;
-
             aspect-ratio: 4/5;
 
+            object-fit: cover;
+
             filter:
-                saturate(.85)
                 brightness(.85)
-                contrast(1.05);
+                saturate(.85);
         }
 
-        .hero-image::after {
-
-            content: "";
-
-            position: absolute;
-
-            inset: 0;
-
-            background:
-                linear-gradient(to top,
-                    rgba(7, 17, 13, .45),
-                    transparent 50%);
-        }
-
-        /* Sections */
+        /* Section */
 
         section {
 
             padding: 130px 0;
+        }
+
+        .section-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: end;
+
+            margin-bottom: 70px;
+
+            gap: 20px;
         }
 
         .section-label {
@@ -371,7 +364,7 @@
 
             color: var(--accent);
 
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .section-title {
@@ -379,33 +372,33 @@
             font-size: 44px;
 
             line-height: 1.2;
-
-            margin-bottom: 20px;
         }
 
-        .section-desc {
+        .section-link {
 
-            max-width: 680px;
+            color: var(--accent-light);
 
-            color: var(--text-soft);
+            font-size: 14px;
 
-            line-height: 1.9;
-
-            margin-bottom: 70px;
+            white-space: nowrap;
         }
 
-        /* Cards */
+        /* Grid */
 
         .grid {
 
             display: grid;
 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
 
             gap: 24px;
         }
 
+        /* Card */
+
         .card {
+
+            display: block;
 
             background: var(--card);
 
@@ -413,7 +406,7 @@
 
             border-radius: 30px;
 
-            padding: 30px;
+            padding: 24px;
 
             backdrop-filter: blur(18px);
 
@@ -424,29 +417,58 @@
 
             transform: translateY(-6px);
 
-            background: rgba(255, 255, 255, 0.07);
+            background: rgba(255,255,255,.07);
 
-            border-color: rgba(255, 255, 255, 0.14);
+            border-color: rgba(255,255,255,.14);
+        }
+
+        .card-image {
+
+            overflow: hidden;
+
+            border-radius: 20px;
+
+            aspect-ratio: 16/10;
+
+            margin-bottom: 22px;
+
+            background: rgba(255,255,255,.04);
+        }
+
+        .card-image img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            transition: .6s;
+        }
+
+        .card:hover img {
+
+            transform: scale(1.05);
         }
 
         .card-tag {
 
             font-size: 12px;
 
-            letter-spacing: 1px;
-
             text-transform: uppercase;
+
+            letter-spacing: 1px;
 
             color: var(--accent);
 
-            margin-bottom: 18px;
+            margin-bottom: 14px;
         }
 
         .card h3 {
 
             font-size: 24px;
 
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .card p {
@@ -454,15 +476,6 @@
             color: var(--text-soft);
 
             line-height: 1.8;
-
-            margin-bottom: 26px;
-        }
-
-        .card a {
-
-            color: var(--accent-light);
-
-            font-size: 14px;
         }
 
         /* About */
@@ -485,24 +498,17 @@
             border-radius: 30px;
 
             border: 1px solid var(--line);
-
-            box-shadow:
-                0 20px 70px rgba(0, 0, 0, .4);
         }
 
         .about-image img {
 
             width: 100%;
 
-            display: block;
+            aspect-ratio: 1/1;
 
             object-fit: cover;
 
-            aspect-ratio: 1/1;
-
-            filter:
-                brightness(.78)
-                saturate(.8);
+            display: block;
         }
 
         .about-text p {
@@ -511,14 +517,14 @@
 
             line-height: 1.9;
 
-            margin-bottom: 24px;
+            margin-top: 24px;
         }
 
         /* Contact */
 
         .contact-card {
 
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,.05);
 
             border: 1px solid var(--line);
 
@@ -538,9 +544,9 @@
 
         .contact-card p {
 
-            max-width: 620px;
-
             color: var(--text-soft);
+
+            max-width: 620px;
 
             line-height: 1.8;
 
@@ -564,7 +570,7 @@
 
             border: 1px solid var(--line);
 
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255,255,255,.04);
 
             transition: .25s;
         }
@@ -573,7 +579,7 @@
 
             transform: translateY(-2px);
 
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255,255,255,.08);
         }
 
         /* Footer */
@@ -589,7 +595,7 @@
 
         /* Responsive */
 
-        @media(max-width: 980px) {
+        @media(max-width:980px) {
 
             .hero-layout,
             .about-layout {
@@ -601,14 +607,9 @@
 
                 min-height: auto;
             }
-
-            section {
-
-                padding: 90px 0;
-            }
         }
 
-        @media(max-width: 640px) {
+        @media(max-width:640px) {
 
             .container {
 
@@ -622,23 +623,9 @@
                 gap: 18px;
             }
 
-            .nav-links {
-
-                flex-wrap: wrap;
-
-                justify-content: center;
-
-                gap: 16px;
-            }
-
             .hero h1 {
 
                 letter-spacing: -3px;
-            }
-
-            .hero p {
-
-                font-size: 17px;
             }
 
             .section-title {
@@ -650,13 +637,9 @@
 
                 padding: 36px;
             }
-
-            .contact-card h2 {
-
-                font-size: 32px;
-            }
         }
     </style>
+
 </head>
 
 <body>
@@ -693,7 +676,7 @@
 
             <div class="hero-layout">
 
-                <div class="hero-content">
+                <div>
 
                     <div class="hero-label">
                         Software Engineer · Unity Developer
@@ -711,28 +694,28 @@
 
                     <div class="actions">
 
-                        <a href="#projects" class="btn btn-primary">
+                        <a href="#projects"
+                           class="btn btn-primary">
+
                             Explore Projects
+
                         </a>
 
-                        <a href="#contact" class="btn btn-secondary">
+                        <a href="#contact"
+                           class="btn btn-secondary">
+
                             Contact Me
+
                         </a>
 
                     </div>
 
                 </div>
 
-                <!-- HERO IMAGE -->
+                <div class="hero-image">
 
-                <div class="hero-image-wrap">
-
-                    <div class="hero-image">
-
-                        <img src="../Raw/Img/nature-3808354_1920.jpg"
-                            alt="Profile Picture">
-
-                    </div>
+                    <img src="../Raw/Img/nature-3808354_1920.jpg"
+                         alt="Profile">
 
                 </div>
 
@@ -744,128 +727,31 @@
 
         <section id="projects">
 
-            <div class="section-label">
-                Selected Work
+            <div class="section-header">
+
+                <div>
+
+                    <div class="section-label">
+                        Selected Work
+                    </div>
+
+                    <h2 class="section-title">
+                        Systems, tools and interactive experiences.
+                    </h2>
+
+                </div>
+
+                <a href="projects.html"
+                   class="section-link">
+
+                    All Projects →
+
+                </a>
+
             </div>
 
-            <h2 class="section-title">
-                Systems, tools and interactive experiences.
-            </h2>
-
-            <p class="section-desc">
-                A collection of game systems, gameplay prototypes
-                and software experiments focused on architecture,
-                interaction and long-term scalability.
-            </p>
-
-            <div class="grid">
-
-                <div class="card">
-
-                    <div class="card-tag">
-                        Unity / Game System
-                    </div>
-
-                    <h3>
-                        Card Game
-                    </h3>
-
-                    <p>
-                        Turn-based combat framework with modular deck architecture
-                        and scalable gameplay systems.
-                    </p>
-
-                    <a href="Project_CardGame.html">
-                        View Project →
-                    </a>
-
-                </div>
-
-                <div class="card">
-
-                    <div class="card-tag">
-                        Simulation
-                    </div>
-
-                    <h3>
-                        Cooking Simulator
-                    </h3>
-
-                    <p>
-                        Restaurant simulation focused on AI customer behavior,
-                        cooking workflow and management mechanics.
-                    </p>
-
-                    <a href="Project_CookGame.html">
-                        View Project →
-                    </a>
-
-                </div>
-
-                <div class="card">
-
-                    <div class="card-tag">
-                        Experiment
-                    </div>
-
-                    <h3>
-                        Dice Experiment
-                    </h3>
-
-                    <p>
-                        Lightweight probability simulation with visual feedback
-                        and interaction-driven statistical experiments.
-                    </p>
-
-                    <a href="../touzi.html">
-                        Open Demo →
-                    </a>
-
-                </div>
-
-                <div class="card">
-
-                    <div class="card-tag">
-                        Frontend
-                    </div>
-
-                    <h3>
-                        SPA Demo
-                    </h3>
-
-                    <p>
-                        Single-page application prototype exploring transitions,
-                        rendering workflow and navigation architecture.
-                    </p>
-
-                    <a href="../spa.html">
-                        Open Demo →
-                    </a>
-
-                </div>
-
-                <div class="card">
-
-                    <div class="card-tag">
-                        Prototype
-                    </div>
-
-                    <h3>
-                        Cooking Prototype
-                    </h3>
-
-                    <p>
-                        Gameplay interaction prototype exploring recipes,
-                        kitchen workflow and tactile player feedback.
-                    </p>
-
-                    <a href="../cook/index.html">
-                        View Prototype →
-                    </a>
-
-                </div>
-
-            </div>
+            <div class="grid"
+                 id="projects-grid"></div>
 
         </section>
 
@@ -882,7 +768,7 @@
                 <div class="about-image">
 
                     <img src="../Raw/Img/fronds-1869757_1920.jpg"
-                        alt="Forest">
+                         alt="Forest">
 
                 </div>
 
@@ -900,8 +786,6 @@
                     <p>
                         My interests range from gameplay programming and UI systems
                         to simulation mechanics and development tooling.
-                        I value minimal interfaces, stable architecture
-                        and thoughtful interaction design.
                     </p>
 
                 </div>
@@ -927,17 +811,21 @@
                 <p>
                     Interested in gameplay systems,
                     software architecture or interactive experiences?
-                    Feel free to reach out.
                 </p>
 
                 <div class="contact-links">
 
-                    <a href="https://github.com/Type037" target="_blank">
+                    <a href="https://github.com/Type037"
+                       target="_blank">
+
                         GitHub
+
                     </a>
 
                     <a href="mailto:your.email@example.com">
+
                         Email
+
                     </a>
 
                 </div>
@@ -957,9 +845,77 @@
 
     </div>
 
-    <!-- GSAP -->
+    <!-- SCRIPT -->
 
     <script>
+
+        // =========================
+        // Load Projects From JSON
+        // =========================
+
+        async function loadProjects() {
+
+            const response = await fetch("./data/Project.json")
+
+            const projects = await response.json()
+
+            const grid = document.getElementById("projects-grid")
+
+            // only first 6
+
+            projects.slice(0, 6).forEach(project => {
+
+                const tag = project.Tag || "Project"
+
+                const description =
+                    project.Description ||
+                    "More details coming soon."
+
+                const image =
+                    project.Image ||
+                    "../Raw/Img/nature-3808354_1920.jpg"
+
+                grid.innerHTML += `
+
+                <a class="card" href="${project.Url}">
+
+                    <div class="card-image">
+
+                        <img src="${image}"
+                             alt="${project.Name}">
+
+                    </div>
+
+                    <div class="card-tag">
+
+                        ${tag}
+
+                    </div>
+
+                    <h3>
+
+                        ${project.Name}
+
+                    </h3>
+
+                    <p>
+
+                        ${description}
+
+                    </p>
+
+                </a>
+                `
+            })
+
+            initCardAnimation()
+        }
+
+        loadProjects()
+
+        // =========================
+        // GSAP
+        // =========================
 
         gsap.registerPlugin(ScrollTrigger)
 
@@ -1004,23 +960,25 @@
             ease: "power3.out"
         })
 
-        gsap.utils.toArray(".card").forEach(card => {
+        function initCardAnimation() {
 
-            gsap.from(card, {
+            gsap.utils.toArray(".card").forEach(card => {
 
-                scrollTrigger: {
+                gsap.from(card, {
 
-                    trigger: card,
-                    start: "top 88%"
-                },
+                    scrollTrigger: {
 
-                opacity: 0,
-                y: 40,
-                duration: 1,
-                ease: "power2.out"
+                        trigger: card,
+                        start: "top 88%"
+                    },
+
+                    opacity: 0,
+                    y: 40,
+                    duration: 1,
+                    ease: "power2.out"
+                })
             })
-
-        })
+        }
 
         gsap.from(".about-image", {
 
@@ -1061,7 +1019,7 @@
             duration: 1
         })
 
-        // subtle mouse movement
+        // Mouse Glow
 
         document.addEventListener("mousemove", (e) => {
 
@@ -1074,7 +1032,6 @@
 
                 ease: "power1.out"
             })
-
         })
 
     </script>
