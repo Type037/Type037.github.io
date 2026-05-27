@@ -984,7 +984,7 @@ async function loadBlogs() {
     try {
 
         const response =
-            await fetch("./data/Blog.json")
+            await fetch("./data/Json/Blog.json")
 
         const blogs =
             await response.json()
@@ -1058,7 +1058,7 @@ async function loadPreferences() {
     try {
 
         const response =
-            await fetch("./data/Preference.json")
+            await fetch("./data/Json/Preference.json")
 
         const preferences =
             await response.json()
