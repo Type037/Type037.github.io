@@ -4,7 +4,7 @@
         "Name": "Card Game",
         "Tag": "Unity / Game System",
         "Description": "Turn-based combat framework with modular deck architecture and scalable gameplay systems.",
-        "Url": "/Project/Project_CardGame.html",
+        "Url": "Project/Project_CardGame.html",
         "Image": ""
     },
     {
@@ -12,7 +12,7 @@
         "Name": "Cooking Simulator",
         "Tag": "",
         "Description": "Restaurant simulation focused on AI customer behavior, cooking workflow and management mechanics.",
-        "Url": "/Project/Project_CookGame.html",
+        "Url": "Project/Project_CookGame.html",
         "Image": ""
     },
     {
