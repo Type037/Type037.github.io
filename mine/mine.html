@@ -94,7 +94,234 @@
 
             padding: 0 32px;
         }
+        /* =========================
+        BLOG
+        ========================= */
 
+        .blog-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit,minmax(320px,1fr));
+
+            gap: 24px;
+        }
+
+        .blog-card {
+
+            position: relative;
+
+            overflow: hidden;
+
+            border-radius: 30px;
+
+            border: 1px solid var(--line);
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(255,255,255,.06),
+                    rgba(255,255,255,.03)
+                );
+
+            transition: .35s ease;
+
+            min-height: 340px;
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+
+            transform: translateY(-6px);
+
+            border-color:
+                rgba(255,255,255,.16);
+        }
+        .blog-cover {
+
+            height: 180px;
+
+            overflow: hidden;
+        }
+        .blog-cover img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            transition: .6s;
+        }
+        .blog-card:hover img {
+
+            transform: scale(1.06);
+        }
+        .blog-content {
+
+            padding: 28px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            flex: 1;
+        }
+        .blog-date {
+
+            font-size: 12px;
+
+            color: var(--accent);
+
+            margin-bottom: 14px;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+        }
+        .blog-card h3 {
+
+            font-size: 26px;
+
+            line-height: 1.3;
+
+            margin-bottom: 16px;
+        }
+        .blog-card p {
+
+            color: var(--text-soft);
+
+            line-height: 1.8;
+
+            flex: 1;
+        }
+        .blog-link {
+
+            margin-top: 24px;
+
+            color: var(--accent-light);
+
+            font-size: 14px;
+        }
+
+        /* =========================
+        PREFERENCE
+        ========================= */
+
+        .preference-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit,minmax(260px,1fr));
+
+            gap: 22px;
+        }
+        .preference-card {
+
+            position: relative;
+
+            overflow: hidden;
+
+            border-radius: 26px;
+
+            min-height: 220px;
+
+            border: 1px solid var(--line);
+
+            background:
+                rgba(255,255,255,.04);
+
+            transition: .35s;
+        }
+        .preference-card:hover {
+
+            transform: translateY(-6px);
+
+            border-color:
+                rgba(255,255,255,.14);
+        }
+        .preference-bg {
+
+            position: absolute;
+
+            inset: 0;
+        }
+        .preference-bg img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            filter:
+                brightness(.45)
+                saturate(.75);
+
+            transition: .8s;
+        }
+        .preference-card:hover img {
+
+            transform: scale(1.08);
+        }
+        .preference-overlay {
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    to top,
+                    rgba(7,17,13,.88),
+                    rgba(7,17,13,.25)
+                );
+        }
+        .preference-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            padding: 28px;
+
+            height: 100%;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: end;
+        }
+        .preference-type {
+
+            font-size: 12px;
+
+            color: var(--accent);
+
+            margin-bottom: 10px;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+        }
+        .preference-card h3 {
+
+            font-size: 28px;
+
+            margin-bottom: 12px;
+        }
+        .preference-card p {
+
+            color: rgba(232,236,233,.75);
+
+            line-height: 1.7;
+        }
         /* Glow */
 
         .bg-glow {
