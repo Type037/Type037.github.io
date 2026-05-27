@@ -4,15 +4,15 @@
         "Name": "Card Game",
         "Tag": "Unity / Game System",
         "Description": "Turn-based combat framework with modular deck architecture and scalable gameplay systems.",
-        "Url": "/Project/Project_CardGame.html",
-        "Image": ""
+        "Url": "Project_CardGame.html",
+        "Image": "../Raw/Img/project-cardgame.jpg"
     },
     {
         "Id": "2",
         "Name": "Cooking Simulator",
         "Tag": "",
         "Description": "Restaurant simulation focused on AI customer behavior, cooking workflow and management mechanics.",
-        "Url": "/Project/Project_CookGame.html",
+        "Url": "Project_CookGame.html",
         "Image": ""
     },
     {
@@ -20,7 +20,7 @@
         "Name": "Dice Experiment",
         "Tag": "",
         "Description": "",
-        "Url": "Project/touzi.html",
+        "Url": "../touzi.html",
         "Image": ""
     },
     {
@@ -28,7 +28,7 @@
         "Name": "SPA Demo",
         "Tag": "",
         "Description": "",
-        "Url": "Project/spa.html",
+        "Url": "../spa.html",
         "Image": ""
     },
     {
@@ -36,15 +36,7 @@
         "Name": "Cooking Prototype",
         "Tag": "",
         "Description": "",
-        "Url": "Project/index.html",
-        "Image": ""
-    },
-    {
-        "Id": "6",
-        "Name": "Survival Choice Game",
-        "Tag": "Unity / Game System",
-        "Description": "",
-        "Url": "Project/game.html",
+        "Url": "../cook/index.html",
         "Image": ""
     }
 ]

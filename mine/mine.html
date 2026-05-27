@@ -919,7 +919,7 @@
 
         async function loadProjects() {
 
-            const response = await fetch("./data/Project.json")
+            const response = await fetch("./data/Json/Project.json")
 
             const projects = await response.json()
 
@@ -975,7 +975,161 @@
             initCardAnimation()
         }
 
-        loadProjects()
+        // =========================
+// LOAD BLOGS
+// =========================
+
+async function loadBlogs() {
+
+    try {
+
+        const response =
+            await fetch("./data/Blog.json")
+
+        const blogs =
+            await response.json()
+
+        const grid =
+            document.getElementById("blogs-grid")
+
+        blogs.slice(0, 4).forEach(blog => {
+
+            const image =
+                blog.Image ||
+                "../Raw/Img/nature-3808354_1920.jpg"
+
+            grid.innerHTML += `
+
+            <a class="blog-card"
+               href="${blog.Url}">
+
+                <div class="blog-cover">
+
+                    <img src="${image}"
+                         alt="${blog.Title}">
+
+                </div>
+
+                <div class="blog-content">
+
+                    <div class="blog-date">
+
+                        ${blog.Date || "Development Log"}
+
+                    </div>
+
+                    <h3>
+
+                        ${blog.Title}
+
+                    </h3>
+
+                    <p>
+
+                        ${blog.Description ||
+                        "More details coming soon."}
+
+                    </p>
+
+                    <div class="blog-link">
+
+                        Read Article →
+
+                    </div>
+
+                </div>
+
+            </a>
+            `
+        })
+
+    } catch(error) {
+
+        console.error(error)
+    }
+}
+
+// =========================
+// LOAD PREFERENCES
+// =========================
+
+async function loadPreferences() {
+
+    try {
+
+        const response =
+            await fetch("./data/Preference.json")
+
+        const preferences =
+            await response.json()
+
+        const grid =
+            document.getElementById(
+                "preferences-grid"
+            )
+
+        preferences.slice(0, 6).forEach(item => {
+
+            const image =
+                item.Image ||
+                "../Raw/Img/fronds-1869757_1920.jpg"
+
+            grid.innerHTML += `
+
+            <a class="preference-card"
+               href="${item.Url || '#'}">
+
+                <div class="preference-bg">
+
+                    <img src="${image}"
+                         alt="${item.Name}">
+
+                </div>
+
+                <div class="preference-overlay"></div>
+
+                <div class="preference-content">
+
+                    <div class="preference-type">
+
+                        ${item.Type || "Preference"}
+
+                    </div>
+
+                    <h3>
+
+                        ${item.Name}
+
+                    </h3>
+
+                    <p>
+
+                        ${item.Description ||
+                        ""}
+
+                    </p>
+
+                </div>
+
+            </a>
+            `
+        })
+
+    } catch(error) {
+
+        console.error(error)
+    }
+}
+
+// =========================
+// INIT
+// =========================
+
+loadProjects()
+
+loadBlogs()
+
+loadPreferences()
 
         // =========================
         // GSAP
